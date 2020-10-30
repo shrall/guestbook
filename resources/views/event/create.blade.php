@@ -16,6 +16,14 @@
             <input type="text" class="form-control" name="description" >
         </div>
         <div class="form-group">
+            <label>Created by : </label>
+            <select name="created_by" class="custom-select"">
+                @foreach ($users as $user)
+                    <option value="{{$user->id}}">{{$user->name}}({{$user->email}})</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group">
             <label>Event Date : </label>
             <input type="date" class="form-control" name="event_date" >
         </div>

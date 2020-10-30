@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -15,10 +16,11 @@ class EventController extends Controller
      */
     public function index()
     {
-        $events = Event::all();
         $pages = 'event';
-        // return view('event/index')->with('events', $events);
+        $events = Event::all(); // select *
         return view('event/index', compact('events','pages'));
+        // return view('event/index', compact('events','pages'));
+        // return view('event/index')->with('events', $events);
     }
 
     /**
@@ -29,7 +31,8 @@ class EventController extends Controller
     public function create()
     {
         $pages = 'event';
-        return view('event/create', compact('pages'));
+        $users = User::all();
+        return view('event/create', compact('pages','users'));
     }
 
     /**
@@ -43,17 +46,19 @@ class EventController extends Controller
         $data = $request->validate([
             'title'=>'required|unique:events',
             'description'=>'required',
+            'created_by'=>'required',
             'event_date'=>'required'
         ]);
 
         Event::create([
             'title' => $data['title'],
             'description' => $data['description'],
+            'created_by' => $data['created_by'],
             'event_date' => $data['event_date']
         ]);
 
         // dd($request->all()); 
-        return redirect('/event')->with('success', 'Event Created');;
+        return redirect('/event')->with('success', 'Event Created');
     }
 
     /**

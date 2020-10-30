@@ -13,6 +13,7 @@ class Event extends Model
         'title',
         'description',
         'status',
+        'created_by',
         'noa',
         'event_date',
     ];
