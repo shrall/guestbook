@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\Auth\ActivationController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\UserController;
+use App\Listeners\ActivationListener;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +27,7 @@ use App\Http\Controllers\UserController;
 Route::get('/', [PageController::class, 'index']);
 Route::get('/pages/jadwal', [PageController::class, 'jadwal']);
 Route::get('/pages/kontak', [PageController::class, 'kontak']);
+Route::get('activate', [ActivationController::class, 'activate'])->name('activate');
 
 Route::resource('event', EventController::class);
 Route::resource('user', UserController::class);
