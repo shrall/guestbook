@@ -39,8 +39,7 @@ class LoginController extends Controller
             if ($check->is_active == '1') {
                 if ($check->is_login == '0') {
                     if (Auth::attempt($user)) {
-                        // $this->is_login(Auth::id());
-                        // dd(Client::find(2));
+                        $this->is_login(Auth::id());
                         $response = $http->post('http://guestbook.test/oauth/token', [
                             'form_params' => [
                                 'grant_type' => 'password',
