@@ -46,19 +46,25 @@ class LoginController extends Controller
             'email' => $request->email,
             'password' => $request->password,
             'role_id' => 1,
-            'is_login' => '0'
+            'is_login' => '0',
+            'is_active' => '1',
+            'is_verified' => '1'
         ];
         $creator = [
             'email' => $request->email,
             'password' => $request->password,
             'role_id' => 2,
-            'is_login' => '0'
+            'is_login' => '0',
+            'is_active' => '1',
+            'is_verified' => '1'
         ];
         $user = [
             'email' => $request->email,
             'password' => $request->password,
             'role_id' => 3,
-            'is_login' => '0'
+            'is_login' => '0',
+            'is_active' => '1',
+            'is_verified' => '1'
         ];
 
         if (Auth::attempt($admin)) {
@@ -77,21 +83,22 @@ class LoginController extends Controller
         return redirect()->route('login');
     }
 
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
         $user = User::findOrFail(Auth::id());
-        return $user->update([
+        $user->update([
             'is_login' => '0',
         ]);
 
         $request->session()->invalidate();
         return $this->loggedOut($request) ?: redirect('login');
-
     }
 
-    public function isLogin(int $id){
+    private function isLogin(int $id)
+    {
         $user = User::findOrFail($id);
         return $user->update([
-            'is_login' => '1',
+           'is_login' => '1',
         ]);
     }
 }

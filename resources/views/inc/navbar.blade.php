@@ -7,7 +7,7 @@
 @auth
 @if(\Illuminate\Support\Facades\Auth::user()->isAdmin())
 <li class="nav-item @if ($pages ?? ''=='user')active @endif">
-    <a class="nav-link" href="/user">User List</a>
+    <a class="nav-link" href="{{route('admin.user.index')}}">User List</a>
 </li>
 @endif    
 @endauth
