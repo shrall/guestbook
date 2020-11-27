@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\EventController as AdminEventController;
+use App\Http\Controllers\Creator\EventController as CreatorEventController;
+use App\Http\Controllers\User\EventController as UserEventController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -37,10 +39,11 @@ Route::group(['middleware' => ['admin'], 'prefix' => 'admin', 'as' => 'admin.'],
     Route::resource('user', UserController::class);
 });
 Route::group(['middleware' => ['creator'], 'prefix' => 'creator', 'as' => 'creator.'], function () {
+    Route::resource('event', CreatorEventController::class);
 });
 Route::group(['middleware' => ['user'], 'prefix' => 'user', 'as' => 'user.'], function () {
-    Route::resource('user', UserUserController::class);
-    
+    Route::resource('event', UserEventController::class);
+    // Route::resource('user', UserUserController::class);
 });
 
 // Route::resource('user', UserController::class)->middleware('admin');

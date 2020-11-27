@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\creator;
 
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\User;
-use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -17,8 +17,8 @@ class EventController extends Controller
     public function index()
     {
         $pages = 'event';
-        $events = Event::all(); // select *
-        return view('event/index', compact('events','pages'));
+        $events = Event::all();
+        return view('creator.event.index', compact('events','pages'));
     }
 
     /**
@@ -30,7 +30,7 @@ class EventController extends Controller
     {
         $pages = 'event';
         $users = User::all();
-        return view('event/create', compact('pages','users'));
+        return view('creator.event.create', compact('pages','users'));
     }
 
     /**
@@ -61,46 +61,46 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Event  $event
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show(Event $event)
     {
-        //
+        return view('creator.event.detail', compact('event'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Event  $event
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit(Event $event)
     {
         $pages = 'event';
-        return view('event/edit', compact('event', 'pages'));
+        return view('creator.event.edit', compact('event', 'pages'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Event  $event
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Event $event)
     {
         $event->update($request->all());
-        return redirect('/event');
+        return redirect()->route('creator.event.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Event  $event
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Event $event)
+    public function destroy($id)
     {
         $event->delete();
         return redirect()->back();

@@ -9,8 +9,8 @@
 <li class="nav-item @if ($pages ?? ''=='user')active @endif">
     <a class="nav-link" href="{{route('admin.user.index')}}">User List</a>
 </li>
-@endif    
+@endif
 @endauth
 <li class="nav-item @if ($pages ?? ''=='event')active @endif">
-    <a class="nav-link" href="/event">Events</a>
+<a class="nav-link" href="{{route('event.index')}}">Events</a>
 </li>

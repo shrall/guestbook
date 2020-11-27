@@ -27,7 +27,6 @@ class RegisterController extends Controller
                 'message' => 'Failed to create account.'
             ]);
         } else {
-            //harusnya disini send email
             event(new ActivationEvent($user));
             return response([
                 'message' => 'Account created.'

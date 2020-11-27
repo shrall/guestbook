@@ -66,7 +66,7 @@ class LoginController extends Controller
                     'message' => 'Account Suspended.'
                 ]);
             }
-        }else {
+        } else {
             return response([
                 'message' => 'Please verify your e-mail address.'
             ]);
@@ -81,5 +81,42 @@ class LoginController extends Controller
         ]);
     }
 
-    //
+    public function refresh(Request $request)
+    {
+        $this->validate($request, [
+            'refresh_token' => 'required',
+        ], [
+            'refresh_token' => 'refresh token is required'
+        ]);
+
+
+        $http = new GuzzleHttpClient;
+        $response = $http->post('http://guestbook.test/oauth/token', [
+            'form_params' => [
+                'grant_type' => 'refresh_token',
+                'client_id' => $this->client->id,
+                'client_secret' => $this->client->secret,
+                'refresh_token' => $request->refresh_token,
+                'scope' => '*',
+            ]
+        ]);
+        return json_decode((string) $response->getBody(), true);
+    }
+
+    public function logout()
+    {
+        $user = Auth::user();
+        $accesstoken = Auth::user()->token();
+        DB::table('oauth_refresh_tokens')->where('access_token_id', $accesstoken->id)->update(['revoked' => true]);
+
+        $user->update([
+            'is_login' => '0',
+        ]);
+
+        $accesstoken->revoke();
+
+        return response([
+            'message' => 'Logged Out.'
+        ]);
+    }
 }
