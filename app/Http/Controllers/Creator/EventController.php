@@ -66,7 +66,13 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        return view('creator.event.detail', compact('event'));
+        $events = Event::all()->except($event->id)->pluck('id');
+        $guestList = User::whereNotIn('id', function ($query) use ($events) {
+            $query->select('user_id')->from('event_user')
+                ->whereNotIn('event_id', $events);
+        })->where('role_id', 3)->get();
+
+        return view('creator.event.detail', compact('event', 'guestList'));
     }
 
     /**

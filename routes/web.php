@@ -11,6 +11,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\User\UserController as UserUserController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\ActivationController;
+use App\Http\Controllers\Creator\GuestController as CreatorGuestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,9 @@ Route::group(['middleware' => ['admin'], 'prefix' => 'admin', 'as' => 'admin.'],
 });
 Route::group(['middleware' => ['creator'], 'prefix' => 'creator', 'as' => 'creator.'], function () {
     Route::resource('event', CreatorEventController::class);
+    Route::resource('guests', CreatorGuestController::class);
+    Route::post('guests/{id}/approve', [CreatorGuestController::class, 'approve'])->name('guests.approve');
+    Route::post('guests/{id}/decline', [CreatorGuestController::class, 'decline'])->name('guests.decline');
 });
 Route::group(['middleware' => ['user'], 'prefix' => 'user', 'as' => 'user.'], function () {
     Route::resource('event', UserEventController::class);
