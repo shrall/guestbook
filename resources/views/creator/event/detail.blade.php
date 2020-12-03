@@ -2,20 +2,13 @@
 
 @section('content')
 <div class="container">
-
     <div class="header mt-5 mb-5">
         <h1>{{ $event->title }}</h1>
+        <ul>
+            <li>Creator : {{ $event->creator->name }}</li>
+            <li>Date : {{ $event->event_date }}</li>
+        </ul>
     </div>
-    <table class="table table-striped mt-5">
-        <thead>
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col">E-Mail</th>
-                <th scope="col">Events</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+    @include('creator.event.table.guest_list')
 </div>
 @endsection
