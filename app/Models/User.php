@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use App\Models\Event;
 
 class User extends Authenticatable
 {
@@ -48,34 +49,35 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function events()
-    {
+    public function events() {
         return $this->hasMany(Event::class, 'created_by', 'id');
     }
 
-    public function role()
-    {
+    public function role() {
         return $this->belongsTo(Role::class);
     }
 
-    public function attends(){
+    public function attends() {
         return $this->belongsToMany(Event::class)->withPivot('is_approved')->withTimestamps();
     }
 
-    public function isAdmin(){
-        if ($this->role->name == 'Admin' && $this->is_login == 1 && $this->is_active = '1' && $this->is_verified = '1'){
+    public function isAdmin()
+    {
+        if ($this->role->name == 'Admin' && $this->is_login == 1 && $this->is_active = '1' && $this->is_verified = '1') {
             return true;
         }
         return false;
     }
-    public function isCreator(){
-        if ($this->role->name == 'Creator' && $this->is_login == 1 && $this->is_active = '1' && $this->is_verified = '1'){
+    public function isCreator()
+    {
+        if ($this->role->name == 'Creator' && $this->is_login == 1 && $this->is_active = '1' && $this->is_verified = '1') {
             return true;
         }
         return false;
     }
-    public function isNormal(){
-        if ($this->role->name == 'User' && $this->is_login == 1 && $this->is_active = '1' && $this->is_verified = '1'){
+    public function isNormal()
+    {
+        if ($this->role->name == 'User' && $this->is_login == 1 && $this->is_active = '1' && $this->is_verified = '1') {
             return true;
         }
         return false;

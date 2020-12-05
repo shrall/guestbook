@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Event;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
@@ -18,8 +19,10 @@ class EventController extends Controller
     {
         $pages = "event";
         $attends = Auth::user()->attends;
-        $events = Event::doesntHave('guests')->get();
-        dd($events);
+        $events = Event::whereDoesntHave('guests', function (Builder $query) {
+            $query->where('user_id', Auth::user()->id);
+        })->get();
+        // dd($events);
         return view('user.event.index', compact('pages', 'attends', 'events'));
 
     }

@@ -10,8 +10,8 @@
             <!-- Modal body -->
             <div class="modal-body" style="text-align: left;">
                 @if(count($events) > 0)
-                <form action="{{route ('user.events.store')}}" method="post">
-                    {{ csrf_field() }}
+                <form action="{{route ('user.event.store')}}" method="post">
+                @csrf
                     <div class="form-group">
                         <label>Choose Event</label>
                         <select name="event_id" class="custom-select" required>

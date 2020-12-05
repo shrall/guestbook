@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Creator;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class GuestController extends Controller
 {
@@ -86,7 +86,6 @@ class GuestController extends Controller
     {
         //
     }
-
 
     public function approve($id, Request $request) {
         $user = User::findOrFail($id);
